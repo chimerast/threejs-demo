@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div id="viewport" style="width: 900px; height: 600px; margin: auto"></div>
+
+<script src="js/vendor/three-r62.js"></script>
+<script>
+  var renderer;
+  var camera;
+  var scene;
+  var mesh;
+
+  init();
+  render();
+
+  function init() {
+    // 表示領域
+    var viewport = document.getElementById("viewport");
+
+    // レンダラ
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(viewport.clientWidth, viewport.clientHeight);
+
+    viewport.appendChild(renderer.domElement);
+
+    // シーングラフの作成
+    scene = new THREE.Scene();
+
+    // カメラの作成
+    camera = new THREE.PerspectiveCamera(30, viewport.clientWidth / viewport.clientHeight, 1, 100);
+    camera.position.set(0, 0, 6);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    scene.add(camera);
+
+    // 物体
+    var geometry = new THREE.SphereGeometry(1.5, 32, 16);
+    var material = new THREE.MeshBasicMaterial({
+      map: THREE.ImageUtils.loadTexture("img/earth.png")
+    });
+    mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+  }
+
+  function render() {
+    mesh.rotation.y = Date.now() / 2000.0;
+
+    renderer.clear();
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(render);
+  }
+</script>
+</body>
+</html>

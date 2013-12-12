@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+<div id="viewport" style="width: 800px; height: 600px;"></div>
+
+<script type="text/javascript">
+  if (!Object.create) {
+    Object.create = (function () {
+      function F() {
+      }
+
+      return function (o) {
+        if (arguments.length != 1) {
+          throw new Error('Object.create implementation only accepts one parameter.');
+        }
+        F.prototype = o;
+        return new F()
+      }
+    })();
+  }
+  if (!Array.prototype.indexOf) {
+    Array.prototype.indexOf = function (find, i) {
+      var n;
+      if (i === undefined) i = 0;
+      if (i < 0) i += this.length;
+      if (i < 0) i = 0;
+      n = this.length;
+      while (i < n) {
+        if (i in this && this[i] === find) return i;
+        i++;
+      }
+      return -1;
+    };
+  }
+  if (!Date.now) {
+    Date.now = function () {
+      return (new Date()).getTime();
+    };
+  }
+  if (!window.requestAnimationFrame) {
+    var lastTime = 0;
+    window.requestAnimationFrame = function (callback) {
+      var currTime = Date.now(), timeToCall = Math.max(0, 300 - ( currTime - lastTime ));
+      var id = window.setTimeout(function () {
+        callback(currTime + timeToCall);
+      }, timeToCall);
+      lastTime = currTime + timeToCall;
+      return id;
+    };
+  }
+</script>
+
+<script src="js/vendor/three-r58.js"></script>
+<script src="js/vendor/raphael-2.1.2.min.js"></script>
+<script src="js/RaphaelRenderer.js"></script>
+<script src="js/raphael.js"></script>
+</body>
+</html>
