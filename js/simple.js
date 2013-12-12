@@ -28,13 +28,20 @@ jQuery(function ($) {
     camera.lookAt(new THREE.Vector3(0, 0, 0));
     scene.add(camera);
 
+    // 光源の追加
+    var light = new THREE.DirectionalLight(0xcccccc);
+    light.position.set(0, 5, 0);
+    scene.add(light);
+    var ambient = new THREE.AmbientLight(0x333333);
+    scene.add(ambient);
     // カメラコントロール
     controls = new THREE.TrackballControls(camera, viewport);
 
     // 物体
-    var geometry = new THREE.SphereGeometry(2, 32, 16);
-    var material = new THREE.MeshBasicMaterial({
+    var geometry = new THREE.SphereGeometry(1.5, 32, 16);
+    var material = new THREE.MeshPhongMaterial({
       color: 0xffffff,
+      ambient: 0xffffff,
       map: THREE.ImageUtils.loadTexture("img/earth.png")
     });
     var mesh = new THREE.Mesh(geometry, material);
